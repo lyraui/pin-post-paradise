@@ -1,4 +1,4 @@
-import { useRouter, createFileRoute } from "@tanstack/react-router";
+import { Link, useRouter, createFileRoute } from "@tanstack/react-router";
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
 import { listPublicPosts } from "@/lib/posts.functions";
 import { PostCard } from "@/components/fx/PostCard";
