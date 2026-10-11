@@ -61,6 +61,29 @@ function Index() {
         </section>
       )}
 
+      <section className="grid grid-cols-2 gap-3">
+        <a
+          href="https://t.me/FXTEAMLINK"
+          target="_blank"
+          rel="noreferrer"
+          className="glass-strong press rise rounded-3xl p-4"
+        >
+          <p className="text-[11px] font-semibold tracking-widest text-primary uppercase">FX Link</p>
+          <p className="font-display mt-1 text-sm font-bold">Join FX Team</p>
+          <p className="text-xs text-muted-foreground">@FXTEAMLINK</p>
+        </a>
+        <Link to="/feed" className="glass-strong press rise rounded-3xl p-4">
+          <p className="text-[11px] font-semibold tracking-widest text-primary uppercase">Live</p>
+          <p className="font-display mt-1 text-sm font-bold">Channel feed</p>
+          <p className="text-xs text-muted-foreground">See it in Telegram</p>
+        </Link>
+      </section>
+
+      {false && (
+        <section>
+        </section>
+      )}
+
       <section className="space-y-3">
         <h2 className="px-1 text-xs font-semibold tracking-widest text-muted-foreground uppercase">
           Latest
