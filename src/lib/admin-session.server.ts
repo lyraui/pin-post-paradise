@@ -2,7 +2,7 @@ import { getCookie, setCookie, deleteCookie } from "@tanstack/react-start/server
 import { safeEqual } from "./feed";
 
 const COOKIE = "fx_admin";
-const MAX_AGE = 60 * 60 * 12;
+const MAX_AGE = 60 * 60 * 24 * 30;
 
 async function hmac(value: string): Promise<string> {
   const secret = process.env["ADMIN_SESSION_SECRET"];

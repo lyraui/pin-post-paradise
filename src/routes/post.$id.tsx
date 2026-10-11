@@ -49,7 +49,7 @@ function PostPage() {
       <Link to="/" className="glass inline-flex items-center gap-1 rounded-full px-3 py-1.5 text-sm">
         <ArrowLeft className="h-4 w-4" /> Feed
       </Link>
-      <article className="glass space-y-4 rounded-3xl p-4">
+      <article className="glass-strong rise space-y-4 rounded-3xl p-4">
         {post.pinned && (
           <span className="inline-flex items-center gap-1 text-xs font-semibold text-primary">
             <Pin className="h-3 w-3" /> Pinned
