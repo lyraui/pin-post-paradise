@@ -197,6 +197,8 @@ export const adminUpdatePost = createServerFn({ method: "POST" })
         id: z.string().uuid(),
         pinned: z.boolean().optional(),
         published: z.boolean().optional(),
+        title: z.string().max(300).optional(),
+        body: z.string().max(20000).optional(),
       })
       .parse(d),
   )
@@ -204,9 +206,11 @@ export const adminUpdatePost = createServerFn({ method: "POST" })
     const { requireAdmin } = await import("./admin-session.server");
     await requireAdmin();
     const sb = await admin();
-    const patch: { pinned?: boolean; published?: boolean } = {};
+    const patch: { pinned?: boolean; published?: boolean; title?: string; body?: string } = {};
     if (data.pinned !== undefined) patch.pinned = data.pinned;
     if (data.published !== undefined) patch.published = data.published;
+    if (data.title !== undefined) patch.title = data.title;
+    if (data.body !== undefined) patch.body = data.body;
     await sb.from("posts").update(patch).eq("id", data.id);
     return { ok: true };
   });
