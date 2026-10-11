@@ -7,7 +7,7 @@ export function MediaSlider({ media }: { media: FeedMedia[] }) {
   const ref = useRef<HTMLDivElement>(null);
   const [i, setI] = useState(0);
   if (media.length === 0) return null;
-  if (media.length === 1) return <MediaItem m={media[0]} />;
+  if (media.length === 1) return <MediaItem m={media[0]!} />;
   return (
     <div className="space-y-2">
       <div

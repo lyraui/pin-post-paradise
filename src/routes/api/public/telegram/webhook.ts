@@ -16,7 +16,7 @@ type Msg = {
 };
 
 function mediaOf(m: Msg): { kind: string | null; file_id: string | null } {
-  if (m.photo?.length) return { kind: "image", file_id: m.photo[m.photo.length - 1].file_id };
+  if (m.photo?.length) return { kind: "image", file_id: m.photo[m.photo.length - 1]!.file_id };
   if (m.animation) return { kind: "gif", file_id: m.animation.file_id };
   if (m.video) return { kind: "video", file_id: m.video.file_id };
   if (m.sticker && !m.sticker.is_animated) return { kind: m.sticker.is_video ? "video" : "sticker", file_id: m.sticker.file_id };

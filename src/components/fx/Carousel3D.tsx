@@ -42,9 +42,9 @@ export function Carousel3D({ posts }: { posts: FeedPost[] }) {
       const mid = el.scrollLeft + el.clientWidth / 2;
       let cur = 0;
       kids.forEach((k, n) => {
-        if (Math.abs(k.offsetLeft + k.offsetWidth / 2 - mid) < Math.abs(kids[cur].offsetLeft + kids[cur].offsetWidth / 2 - mid)) cur = n;
+        if (Math.abs(k.offsetLeft + k.offsetWidth / 2 - mid) < Math.abs(kids[cur]!.offsetLeft + kids[cur]!.offsetWidth / 2 - mid)) cur = n;
       });
-      const next = kids[(cur + 1) % kids.length];
+      const next = kids[(cur + 1) % kids.length]!;
       el.scrollTo({ left: next.offsetLeft + next.offsetWidth / 2 - el.clientWidth / 2, behavior: "smooth" });
     }, 3500);
     return () => {
