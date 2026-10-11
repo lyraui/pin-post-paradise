@@ -1,3 +1,4 @@
+import { GlassVideo } from "./GlassVideo";
 import type { FeedMedia } from "@/lib/feed";
 
 /** Video URL that makes browsers render the first frame instead of a black box. */
@@ -5,15 +6,7 @@ const frame = (url: string) => (url.includes("#") ? url : `${url}#t=0.1`);
 
 export function MediaItem({ m }: { m: FeedMedia }) {
   if (m.kind === "video") {
-    return (
-      <video
-        src={frame(m.url)}
-        controls
-        playsInline
-        preload="metadata"
-        className="w-full rounded-2xl bg-muted"
-      />
-    );
+    return <GlassVideo src={m.url} />;
   }
   if (m.kind === "sticker") {
     return <img src={m.url} alt="" loading="lazy" className="h-28 w-28 object-contain" />;
