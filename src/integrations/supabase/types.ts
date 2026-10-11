@@ -102,6 +102,39 @@ export type Database = {
         }
         Relationships: []
       }
+      tg_posts: {
+        Row: {
+          chat_id: number
+          created_at: string
+          file_id: string | null
+          kind: string | null
+          media_group_id: string | null
+          message_id: number
+          posted_at: string
+          text: string
+        }
+        Insert: {
+          chat_id: number
+          created_at?: string
+          file_id?: string | null
+          kind?: string | null
+          media_group_id?: string | null
+          message_id: number
+          posted_at?: string
+          text?: string
+        }
+        Update: {
+          chat_id?: number
+          created_at?: string
+          file_id?: string | null
+          kind?: string | null
+          media_group_id?: string | null
+          message_id?: number
+          posted_at?: string
+          text?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
