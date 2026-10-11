@@ -28,8 +28,32 @@ export function Carousel3D({ posts }: { posts: FeedPost[] }) {
     update();
     el.addEventListener("scroll", update, { passive: true });
     window.addEventListener("resize", update);
+    // Smooth auto-slide; pauses while the user is touching.
+    let touching = false;
+    const down = () => (touching = true);
+    const up = () => setTimeout(() => (touching = false), 3000);
+    el.addEventListener("pointerdown", down);
+    el.addEventListener("pointerup", up);
+    el.addEventListener("touchstart", down, { passive: true });
+    el.addEventListener("touchend", up);
+    const timer = window.setInterval(() => {
+      if (touching || el.children.length < 2) return;
+      const kids = Array.from(el.children) as HTMLElement[];
+      const mid = el.scrollLeft + el.clientWidth / 2;
+      let cur = 0;
+      kids.forEach((k, n) => {
+        if (Math.abs(k.offsetLeft + k.offsetWidth / 2 - mid) < Math.abs(kids[cur]!.offsetLeft + kids[cur]!.offsetWidth / 2 - mid)) cur = n;
+      });
+      const next = kids[(cur + 1) % kids.length]!;
+      el.scrollTo({ left: next.offsetLeft + next.offsetWidth / 2 - el.clientWidth / 2, behavior: "smooth" });
+    }, 3500);
     return () => {
+      window.clearInterval(timer);
       el.removeEventListener("scroll", update);
+      el.removeEventListener("pointerdown", down);
+      el.removeEventListener("pointerup", up);
+      el.removeEventListener("touchstart", down);
+      el.removeEventListener("touchend", up);
       window.removeEventListener("resize", update);
     };
   }, [posts.length]);

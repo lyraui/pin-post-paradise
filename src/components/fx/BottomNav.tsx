@@ -1,8 +1,9 @@
 import { Link, useLocation } from "@tanstack/react-router";
-import { Home, User } from "lucide-react";
+import { Home, Radio, User } from "lucide-react";
 
 const items = [
   { to: "/", label: "Home", icon: Home },
+  { to: "/feed", label: "Feed", icon: Radio },
   { to: "/profile", label: "Profile", icon: User },
 ] as const;
 
@@ -11,7 +12,7 @@ export function BottomNav() {
   if (pathname.startsWith("/studio")) return null;
   return (
     <nav className="safe-bottom pointer-events-none fixed inset-x-0 bottom-0 z-40 flex justify-center px-4">
-      <div className="glass-strong pointer-events-auto flex w-full max-w-[200px] items-center gap-1 rounded-full p-1">
+      <div className="glass-strong pointer-events-auto flex w-full max-w-[260px] items-center gap-1 rounded-full p-1">
         {items.map(({ to, label, icon: Icon }) => {
           const active = to === "/" ? pathname === "/" : pathname.startsWith(to);
           return (

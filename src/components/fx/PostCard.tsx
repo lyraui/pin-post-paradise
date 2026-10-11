@@ -17,6 +17,9 @@ export function PostCard({ post, index = 0 }: { post: FeedPost; index?: number }
       {cover && (
         <div className="relative aspect-video bg-muted">
           <MediaThumb m={cover} />
+          {post.media.length > 1 && (
+            <span className="glass-strong absolute bottom-3 right-3 rounded-full px-2 py-0.5 text-[11px] font-semibold">1/{post.media.length}</span>
+          )}
           {cover.kind === "video" && (
             <span className="glass-strong absolute top-3 right-3 rounded-full p-1.5">
               <Play className="h-3 w-3 fill-foreground" />

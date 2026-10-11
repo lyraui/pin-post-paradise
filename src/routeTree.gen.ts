@@ -10,13 +10,21 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as FeedRouteImport } from './routes/feed'
 import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as StudioRouteImport } from './routes/studio'
 import { Route as PostIdRouteImport } from './routes/post.$id'
+import { Route as ApiPublicTelegramWebhookRouteImport } from './routes/api/public/telegram/webhook'
+import { Route as ApiPublicTgFileFileIdRouteImport } from './routes/api/public/tg-file.$fileId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FeedRoute = FeedRouteImport.update({
+  id: '/feed',
+  path: '/feed',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ProfileRoute = ProfileRouteImport.update({
@@ -34,39 +42,84 @@ const PostIdRoute = PostIdRouteImport.update({
   path: '/post/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicTelegramWebhookRoute =
+  ApiPublicTelegramWebhookRouteImport.update({
+    id: '/api/public/telegram/webhook',
+    path: '/api/public/telegram/webhook',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ApiPublicTgFileFileIdRoute = ApiPublicTgFileFileIdRouteImport.update({
+  id: '/api/public/tg-file/$fileId',
+  path: '/api/public/tg-file/$fileId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/feed': typeof FeedRoute
   '/profile': typeof ProfileRoute
   '/studio': typeof StudioRoute
   '/post/$id': typeof PostIdRoute
+  '/api/public/telegram/webhook': typeof ApiPublicTelegramWebhookRoute
+  '/api/public/tg-file/$fileId': typeof ApiPublicTgFileFileIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/feed': typeof FeedRoute
   '/profile': typeof ProfileRoute
   '/studio': typeof StudioRoute
   '/post/$id': typeof PostIdRoute
+  '/api/public/telegram/webhook': typeof ApiPublicTelegramWebhookRoute
+  '/api/public/tg-file/$fileId': typeof ApiPublicTgFileFileIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/feed': typeof FeedRoute
   '/profile': typeof ProfileRoute
   '/studio': typeof StudioRoute
   '/post/$id': typeof PostIdRoute
+  '/api/public/telegram/webhook': typeof ApiPublicTelegramWebhookRoute
+  '/api/public/tg-file/$fileId': typeof ApiPublicTgFileFileIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/profile' | '/studio' | '/post/$id'
+  fullPaths:
+    | '/'
+    | '/feed'
+    | '/profile'
+    | '/studio'
+    | '/post/$id'
+    | '/api/public/telegram/webhook'
+    | '/api/public/tg-file/$fileId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/profile' | '/studio' | '/post/$id'
-  id: '__root__' | '/' | '/profile' | '/studio' | '/post/$id'
+  to:
+    | '/'
+    | '/feed'
+    | '/profile'
+    | '/studio'
+    | '/post/$id'
+    | '/api/public/telegram/webhook'
+    | '/api/public/tg-file/$fileId'
+  id:
+    | '__root__'
+    | '/'
+    | '/feed'
+    | '/profile'
+    | '/studio'
+    | '/post/$id'
+    | '/api/public/telegram/webhook'
+    | '/api/public/tg-file/$fileId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  FeedRoute: typeof FeedRoute
   ProfileRoute: typeof ProfileRoute
   StudioRoute: typeof StudioRoute
   PostIdRoute: typeof PostIdRoute
+  ApiPublicTelegramWebhookRoute: typeof ApiPublicTelegramWebhookRoute
+  ApiPublicTgFileFileIdRoute: typeof ApiPublicTgFileFileIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -76,6 +129,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/feed': {
+      id: '/feed'
+      path: '/feed'
+      fullPath: '/feed'
+      preLoaderRoute: typeof FeedRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/profile': {
@@ -99,14 +159,31 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PostIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/telegram/webhook': {
+      id: '/api/public/telegram/webhook'
+      path: '/api/public/telegram/webhook'
+      fullPath: '/api/public/telegram/webhook'
+      preLoaderRoute: typeof ApiPublicTelegramWebhookRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/tg-file/$fileId': {
+      id: '/api/public/tg-file/$fileId'
+      path: '/api/public/tg-file/$fileId'
+      fullPath: '/api/public/tg-file/$fileId'
+      preLoaderRoute: typeof ApiPublicTgFileFileIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  FeedRoute: FeedRoute,
   ProfileRoute: ProfileRoute,
   StudioRoute: StudioRoute,
   PostIdRoute: PostIdRoute,
+  ApiPublicTelegramWebhookRoute: ApiPublicTelegramWebhookRoute,
+  ApiPublicTgFileFileIdRoute: ApiPublicTgFileFileIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

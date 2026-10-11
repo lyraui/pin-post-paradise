@@ -2,7 +2,8 @@ import { useRouter, createFileRoute, Link, notFound } from "@tanstack/react-rout
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
 import { ArrowLeft, Pin } from "lucide-react";
 import { getPublicPost } from "@/lib/posts.functions";
-import { MediaGrid } from "@/components/fx/Media";
+import { MediaItem } from "@/components/fx/Media";
+import { MediaSlider } from "@/components/fx/MediaSlider";
 import { LikeButton } from "@/components/fx/LikeButton";
 
 const postQuery = (id: string) =>
@@ -73,7 +74,8 @@ function PostPage() {
           </span>
         )}
         {post.title && <h1 className="font-display text-2xl font-bold">{post.title}</h1>}
-        <MediaGrid media={post.media} />
+        <MediaSlider media={post.media.filter((m) => m.kind !== "sticker")} />
+        <div className="flex flex-wrap gap-2">{post.media.filter((m) => m.kind === "sticker").map((m) => <MediaItem key={m.id} m={m} />)}</div>
         {post.body && <p className="text-[15px] leading-relaxed whitespace-pre-wrap">{post.body}</p>}
         <div className="flex items-center justify-between">
           <span className="text-xs text-muted-foreground">
