@@ -52,7 +52,7 @@ function ThumbVideo({ src, className }: { src: string; className: string }) {
     if (!el) return;
     el.muted = true;
     const io = new IntersectionObserver(([e]) => {
-      if (e.isIntersecting) el.play().catch(() => {});
+      if (e?.isIntersecting) el.play().catch(() => {});
       else el.pause();
     }, { threshold: 0.25 });
     io.observe(el);

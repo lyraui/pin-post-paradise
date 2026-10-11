@@ -28,7 +28,6 @@ export function GlassVideo({ src }: { src: string }) {
         src={src}
         playsInline
         preload="metadata"
-        // @ts-expect-error webkit attr
         webkit-playsinline="true"
         onClick={toggle}
         className="block w-full cursor-pointer"
