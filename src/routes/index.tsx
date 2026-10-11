@@ -65,9 +65,6 @@ function Index() {
       <header className="rise space-y-4 pt-2">
         <div className="flex items-center justify-between">
           <h1 className="font-display text-2xl font-bold tracking-tight">FX COPYRIGHT</h1>
-          <span className="glass-strong rounded-full px-3 py-1 text-[11px] font-semibold text-muted-foreground">
-            {new Date().toLocaleDateString(undefined, { day: "numeric", month: "short" })}
-          </span>
         </div>
         <div className="glass-strong hero-3d rounded-[2rem] p-5">
           <p className="text-xs font-semibold tracking-widest text-primary uppercase">Fresh drops</p>
