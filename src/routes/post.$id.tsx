@@ -1,4 +1,4 @@
-import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { useRouter, createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
 import { ArrowLeft, Pin } from "lucide-react";
 import { getPublicPost } from "@/lib/posts.functions";
@@ -37,6 +37,23 @@ export const Route = createFileRoute("/post/$id")({
       </Link>
     </main>
   ),
+  errorComponent: ({ reset }) => {
+    const router = useRouter();
+    return (
+      <main className="safe-top mx-auto max-w-xl px-4 py-16 text-center">
+        <p className="text-sm text-muted-foreground">Couldn't load. Check your connection.</p>
+        <button
+          onClick={() => {
+            router.invalidate();
+            reset();
+          }}
+          className="mt-4 rounded-full bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground"
+        >
+          Try again
+        </button>
+      </main>
+    );
+  },
   component: PostPage,
 });
 
