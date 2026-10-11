@@ -52,8 +52,8 @@ export function Carousel3D({ posts }: { posts: FeedPost[] }) {
               <span className="glass-strong absolute top-3 left-3 inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[11px] font-semibold text-primary">
                 <Pin className="h-3 w-3" /> Pinned
               </span>
-              <div className="glass-strong absolute inset-x-3 bottom-3 rounded-2xl px-4 py-3">
-                <div className="line-clamp-2 text-base font-bold text-foreground">
+              <div className="glass absolute inset-x-3 bottom-3 rounded-full px-4 py-2 backdrop-blur-md">
+                <div className="line-clamp-1 text-sm font-semibold text-foreground">
                   {p.title || p.body || "Post"}
                 </div>
               </div>

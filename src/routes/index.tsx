@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useRouter, createFileRoute } from "@tanstack/react-router";
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
 import { listPublicPosts } from "@/lib/posts.functions";
@@ -42,21 +41,11 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
-const FILTERS = [
-  { id: "all", label: "All" },
-  { id: "video", label: "Videos" },
-  { id: "image", label: "Photos" },
-  { id: "gif", label: "GIFs" },
-  { id: "sticker", label: "Stickers" },
-] as const;
-
 function Index() {
   const { data: posts } = useSuspenseQuery(feedQuery);
-  const [filter, setFilter] = useState<(typeof FILTERS)[number]["id"]>("all");
   const pinned = posts.filter((p) => p.pinned);
   const latest = posts.filter((p) => !p.pinned);
-  const rest =
-    filter === "all" ? latest : posts.filter((p) => p.media.some((m) => m.kind === filter));
+  const rest = latest;
   const totalLikes = posts.reduce((n, p) => n + p.likes, 0);
   const totalMedia = posts.reduce((n, p) => n + p.media.length, 0);
 
@@ -96,19 +85,9 @@ function Index() {
       )}
 
       <section className="space-y-3">
-        <div className="no-scrollbar -mx-4 flex gap-2 overflow-x-auto px-4">
-          {FILTERS.map((f) => (
-            <button
-              key={f.id}
-              onClick={() => setFilter(f.id)}
-              className={`press shrink-0 rounded-full px-4 py-1.5 text-xs font-semibold ${
-                filter === f.id ? "bg-primary text-primary-foreground" : "glass text-muted-foreground"
-              }`}
-            >
-              {f.label}
-            </button>
-          ))}
-        </div>
+        <h2 className="px-1 text-xs font-semibold tracking-widest text-muted-foreground uppercase">
+          Latest
+        </h2>
         <div className="grid grid-cols-2 gap-3">
           {rest.map((p, i) => (
             <PostCard key={p.id} post={p} index={i} />
