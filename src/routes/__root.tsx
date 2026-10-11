@@ -122,6 +122,11 @@ function RootComponent() {
     <QueryClientProvider client={queryClient}>
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
       <TelegramBridge />
+      <div aria-hidden className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
+        <div className="blob blob-a -top-20 -left-20 h-72 w-72" />
+        <div className="blob blob-b top-1/3 right-[-6rem] h-80 w-80" />
+        <div className="blob blob-c bottom-[-5rem] left-1/4 h-72 w-72" />
+      </div>
       <Outlet />
     </QueryClientProvider>
   );

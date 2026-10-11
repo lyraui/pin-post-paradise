@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
-import { Lock, ShieldX, Pin, Trash2, Eye, EyeOff, Loader2, LogOut } from "lucide-react";
+import { Lock, ShieldX, Pin, Trash2, Eye, EyeOff, Loader2, LogOut, ArrowLeft } from "lucide-react";
 import {
   adminStatus,
   adminLogin,
@@ -134,15 +134,21 @@ function Panel({ onLocked }: { onLocked: () => void }) {
     <main className="safe-top safe-bottom mx-auto max-w-xl space-y-5 px-4">
       <header className="flex items-center justify-between pt-2">
         <h1 className="font-display text-xl font-bold">Studio</h1>
-        <button
-          onClick={async () => {
-            await logout();
-            onLocked();
-          }}
-          className="glass inline-flex items-center gap-1 rounded-full px-3 py-1.5 text-sm"
-        >
-          <LogOut className="h-4 w-4" /> Lock
-        </button>
+        <div className="flex gap-2">
+          <Link to="/" className="glass inline-flex items-center gap-1 rounded-full px-3 py-1.5 text-sm">
+            <ArrowLeft className="h-4 w-4" /> Back
+          </Link>
+          <button
+            aria-label="Sign out"
+            onClick={async () => {
+              await logout();
+              onLocked();
+            }}
+            className="glass rounded-full p-2"
+          >
+            <LogOut className="h-4 w-4" />
+          </button>
+        </div>
       </header>
 
       <form

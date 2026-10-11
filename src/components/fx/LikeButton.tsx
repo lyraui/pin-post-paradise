@@ -40,7 +40,7 @@ export function LikeButton({ postId, initial }: { postId: string; initial: numbe
           setCount(initial);
         }
       }}
-      className="glass inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-sm font-semibold transition active:scale-95"
+      className="glass inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-semibold transition active:scale-95"
     >
       <Heart className={`h-4 w-4 ${liked ? "fill-destructive text-destructive" : ""}`} />
       {count}

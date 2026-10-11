@@ -1,45 +1,47 @@
 import { Link } from "@tanstack/react-router";
-import { Pin } from "lucide-react";
+import { Pin, Play } from "lucide-react";
 import type { FeedPost } from "@/lib/feed";
-import { MediaGrid } from "./Media";
+import { MediaThumb } from "./Media";
 import { LikeButton } from "./LikeButton";
 
-export function PostCard({ post }: { post: FeedPost }) {
+export function PostCard({ post, index = 0 }: { post: FeedPost; index?: number }) {
+  const cover = post.media.find((m) => m.kind !== "sticker") ?? post.media[0];
   return (
     <Link
       to="/post/$id"
       params={{ id: post.id }}
-      onPointerMove={(e) => {
-        if (e.pointerType !== "mouse") return;
-        const r = e.currentTarget.getBoundingClientRect();
-        const x = (e.clientX - r.left) / r.width - 0.5;
-        const y = (e.clientY - r.top) / r.height - 0.5;
-        e.currentTarget.style.setProperty("--ry", `${x * 6}deg`);
-        e.currentTarget.style.setProperty("--rx", `${-y * 6}deg`);
-      }}
-      onPointerLeave={(e) => {
-        e.currentTarget.style.setProperty("--ry", "0deg");
-        e.currentTarget.style.setProperty("--rx", "0deg");
-      }}
-      className="glass tilt-card block space-y-3 rounded-3xl p-3 active:scale-[0.99]"
+      style={{ animationDelay: `${Math.min(index, 10) * 50}ms` }}
+      className="glass-strong press rise flex flex-col overflow-hidden rounded-3xl"
     >
-      <MediaGrid media={post.media} compact />
-      <div className="space-y-1 px-1" style={{ transform: "translateZ(20px)" }}>
+      <div className="relative aspect-square bg-muted">
+        {cover ? (
+          <MediaThumb m={cover} />
+        ) : (
+          <div className="flex h-full items-center p-4">
+            <p className="line-clamp-6 text-sm text-foreground">{post.body || post.title}</p>
+          </div>
+        )}
         {post.pinned && (
-          <span className="inline-flex items-center gap-1 text-xs font-semibold text-primary">
+          <span className="glass-strong absolute top-2 left-2 inline-flex items-center gap-1 rounded-full px-2 py-1 text-[11px] font-semibold text-primary">
             <Pin className="h-3 w-3" /> Pinned
           </span>
         )}
-        {post.title && (
-          <h2 className="font-display text-lg leading-tight font-semibold">{post.title}</h2>
+        {cover?.kind === "video" && (
+          <span className="glass-strong absolute top-2 right-2 rounded-full p-1.5">
+            <Play className="h-3 w-3 fill-foreground" />
+          </span>
         )}
-        {post.body && <p className="line-clamp-3 text-sm text-muted-foreground">{post.body}</p>}
       </div>
-      <div className="flex items-center justify-between px-1">
-        <span className="text-xs text-muted-foreground">
-          {new Date(post.created_at).toLocaleDateString()}
-        </span>
-        <LikeButton postId={post.id} initial={post.likes} />
+      <div className="flex flex-1 flex-col gap-2 p-2.5">
+        {post.title && (
+          <h2 className="line-clamp-2 text-sm leading-snug font-bold text-foreground">{post.title}</h2>
+        )}
+        <div className="mt-auto flex items-center justify-between">
+          <span className="text-[11px] text-muted-foreground">
+            {new Date(post.created_at).toLocaleDateString()}
+          </span>
+          <LikeButton postId={post.id} initial={post.likes} />
+        </div>
       </div>
     </Link>
   );

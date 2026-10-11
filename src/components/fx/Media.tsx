@@ -1,10 +1,13 @@
 import type { FeedMedia } from "@/lib/feed";
 
-export function MediaItem({ m, compact }: { m: FeedMedia; compact?: boolean | undefined }) {
+/** Video URL that makes browsers render the first frame instead of a black box. */
+const frame = (url: string) => (url.includes("#") ? url : `${url}#t=0.1`);
+
+export function MediaItem({ m }: { m: FeedMedia }) {
   if (m.kind === "video") {
     return (
       <video
-        src={m.url}
+        src={frame(m.url)}
         controls
         playsInline
         preload="metadata"
@@ -15,25 +18,26 @@ export function MediaItem({ m, compact }: { m: FeedMedia; compact?: boolean | un
   if (m.kind === "sticker") {
     return <img src={m.url} alt="" loading="lazy" className="h-28 w-28 object-contain" />;
   }
-  return (
-    <img
-      src={m.url}
-      alt=""
-      loading="lazy"
-      className={`w-full rounded-2xl bg-muted object-cover ${compact ? "max-h-80" : ""}`}
-    />
-  );
+  return <img src={m.url} alt="" loading="lazy" className="w-full rounded-2xl bg-muted object-cover" />;
 }
 
-export function MediaGrid({ media, compact }: { media: FeedMedia[]; compact?: boolean | undefined }) {
+/** Square preview for feed cards: silent looping video, image or GIF. */
+export function MediaThumb({ m }: { m: FeedMedia }) {
+  const cls = "h-full w-full object-cover";
+  if (m.kind === "video")
+    return <video src={frame(m.url)} muted autoPlay loop playsInline preload="metadata" className={cls} />;
+  if (m.kind === "sticker") return <img src={m.url} alt="" className="h-full w-full object-contain p-4" />;
+  return <img src={m.url} alt="" loading="lazy" className={cls} />;
+}
+
+export function MediaGrid({ media }: { media: FeedMedia[] }) {
   if (!media.length) return null;
   const stickers = media.filter((m) => m.kind === "sticker");
   const main = media.filter((m) => m.kind !== "sticker");
-  const shown = compact ? main.slice(0, 1) : main;
   return (
     <div className="space-y-2">
-      {shown.map((m) => (
-        <MediaItem key={m.id} m={m} compact={compact} />
+      {main.map((m) => (
+        <MediaItem key={m.id} m={m} />
       ))}
       {stickers.length > 0 && (
         <div className="flex flex-wrap gap-2">
