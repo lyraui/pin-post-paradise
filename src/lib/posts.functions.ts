@@ -64,15 +64,18 @@ export const listPublicPosts = createServerFn({ method: "GET" }).handler(async (
 });
 
 export const getPublicPost = createServerFn({ method: "GET" })
-  .inputValidator((d) => z.object({ id: z.string().uuid() }).parse(d))
+  .inputValidator((d) => z.object({ code: z.string().regex(/^[0-9a-f]{8}$/i) }).parse(d))
   .handler(async ({ data }) => {
     const sb = await admin();
-    const { data: row } = await sb
+    const c = data.code.toLowerCase();
+    const { data: rows } = await sb
       .from("posts")
       .select(SELECT)
-      .eq("id", data.id)
+      .gte("id", `${c}-0000-0000-0000-000000000000`)
+      .lte("id", `${c}-ffff-ffff-ffff-ffffffffffff`)
       .eq("published", true)
-      .maybeSingle();
+      .limit(1);
+    const row = rows?.[0];
     if (!row) return null;
     return (await hydrate([row as Row]))[0];
   });
