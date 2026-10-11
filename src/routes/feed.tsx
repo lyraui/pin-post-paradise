@@ -41,7 +41,11 @@ function Feed() {
           style={{ animationDelay: `${Math.min(i, 10) * 40}ms` }}
           className="glass-strong rise space-y-3 rounded-3xl p-3"
         >
-          <MediaSlider media={p.media} />
+          {p.media.length > 0 && (
+            <div className="overflow-hidden rounded-2xl bg-muted/40 [&_img]:mx-auto [&_img]:max-h-[70vh] [&_img]:w-full [&_img]:object-contain">
+              <MediaSlider media={p.media.map((m) => (m.kind === "sticker" ? { ...m, kind: "image" as const } : m))} />
+            </div>
+          )}
           {p.text && <p className="px-1 text-sm whitespace-pre-wrap text-foreground">{p.text}</p>}
           <p className="px-1 text-[11px] text-muted-foreground">{new Date(p.posted_at).toLocaleString()}</p>
         </article>

@@ -14,6 +14,7 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { TelegramBridge } from "../components/fx/Telegram";
 import { BottomNav } from "../components/fx/BottomNav";
+import { ContentGuard } from "../components/fx/ContentGuard";
 
 function NotFoundComponent() {
   return (
@@ -130,6 +131,7 @@ function RootComponent() {
       </div>
       <Outlet />
       <BottomNav />
+      <ContentGuard />
     </QueryClientProvider>
   );
 }
