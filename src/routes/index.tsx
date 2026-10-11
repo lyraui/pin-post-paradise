@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useRouter, createFileRoute } from "@tanstack/react-router";
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
 import { listPublicPosts } from "@/lib/posts.functions";
