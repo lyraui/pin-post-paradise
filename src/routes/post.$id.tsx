@@ -62,7 +62,7 @@ function PostPage() {
   const { data: post } = useSuspenseQuery(postQuery(id));
   if (!post) return null;
   return (
-    <main className="safe-top safe-bottom mx-auto max-w-xl space-y-4 px-4">
+    <main className="safe-top mx-auto pb-32 max-w-xl space-y-4 px-4">
       <Link to="/" className="glass inline-flex items-center gap-1 rounded-full px-3 py-1.5 text-sm">
         <ArrowLeft className="h-4 w-4" /> Feed
       </Link>

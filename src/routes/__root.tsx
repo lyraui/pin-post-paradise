@@ -13,6 +13,7 @@ import { useEffect, type ReactNode } from "react";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { TelegramBridge } from "../components/fx/Telegram";
+import { BottomNav } from "../components/fx/BottomNav";
 
 function NotFoundComponent() {
   return (
@@ -128,6 +129,7 @@ function RootComponent() {
         <div className="blob blob-c bottom-[-5rem] left-1/4 h-72 w-72" />
       </div>
       <Outlet />
+      <BottomNav />
     </QueryClientProvider>
   );
 }
