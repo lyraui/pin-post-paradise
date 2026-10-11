@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as FeedRouteImport } from './routes/feed'
 import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as StudioRouteImport } from './routes/studio'
+import { Route as FxCodeRouteImport } from './routes/fx.$code'
 import { Route as PostIdRouteImport } from './routes/post.$id'
 import { Route as ApiPublicTelegramWebhookRouteImport } from './routes/api/public/telegram/webhook'
 import { Route as ApiPublicTgFileFileIdRouteImport } from './routes/api/public/tg-file.$fileId'
@@ -37,6 +38,11 @@ const StudioRoute = StudioRouteImport.update({
   path: '/studio',
   getParentRoute: () => rootRouteImport,
 } as any)
+const FxCodeRoute = FxCodeRouteImport.update({
+  id: '/fx/$code',
+  path: '/fx/$code',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PostIdRoute = PostIdRouteImport.update({
   id: '/post/$id',
   path: '/post/$id',
@@ -59,6 +65,7 @@ export interface FileRoutesByFullPath {
   '/feed': typeof FeedRoute
   '/profile': typeof ProfileRoute
   '/studio': typeof StudioRoute
+  '/fx/$code': typeof FxCodeRoute
   '/post/$id': typeof PostIdRoute
   '/api/public/telegram/webhook': typeof ApiPublicTelegramWebhookRoute
   '/api/public/tg-file/$fileId': typeof ApiPublicTgFileFileIdRoute
@@ -68,6 +75,7 @@ export interface FileRoutesByTo {
   '/feed': typeof FeedRoute
   '/profile': typeof ProfileRoute
   '/studio': typeof StudioRoute
+  '/fx/$code': typeof FxCodeRoute
   '/post/$id': typeof PostIdRoute
   '/api/public/telegram/webhook': typeof ApiPublicTelegramWebhookRoute
   '/api/public/tg-file/$fileId': typeof ApiPublicTgFileFileIdRoute
@@ -78,6 +86,7 @@ export interface FileRoutesById {
   '/feed': typeof FeedRoute
   '/profile': typeof ProfileRoute
   '/studio': typeof StudioRoute
+  '/fx/$code': typeof FxCodeRoute
   '/post/$id': typeof PostIdRoute
   '/api/public/telegram/webhook': typeof ApiPublicTelegramWebhookRoute
   '/api/public/tg-file/$fileId': typeof ApiPublicTgFileFileIdRoute
@@ -89,6 +98,7 @@ export interface FileRouteTypes {
     | '/feed'
     | '/profile'
     | '/studio'
+    | '/fx/$code'
     | '/post/$id'
     | '/api/public/telegram/webhook'
     | '/api/public/tg-file/$fileId'
@@ -98,6 +108,7 @@ export interface FileRouteTypes {
     | '/feed'
     | '/profile'
     | '/studio'
+    | '/fx/$code'
     | '/post/$id'
     | '/api/public/telegram/webhook'
     | '/api/public/tg-file/$fileId'
@@ -107,6 +118,7 @@ export interface FileRouteTypes {
     | '/feed'
     | '/profile'
     | '/studio'
+    | '/fx/$code'
     | '/post/$id'
     | '/api/public/telegram/webhook'
     | '/api/public/tg-file/$fileId'
@@ -117,6 +129,7 @@ export interface RootRouteChildren {
   FeedRoute: typeof FeedRoute
   ProfileRoute: typeof ProfileRoute
   StudioRoute: typeof StudioRoute
+  FxCodeRoute: typeof FxCodeRoute
   PostIdRoute: typeof PostIdRoute
   ApiPublicTelegramWebhookRoute: typeof ApiPublicTelegramWebhookRoute
   ApiPublicTgFileFileIdRoute: typeof ApiPublicTgFileFileIdRoute
@@ -152,6 +165,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof StudioRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/fx/$code': {
+      id: '/fx/$code'
+      path: '/fx/$code'
+      fullPath: '/fx/$code'
+      preLoaderRoute: typeof FxCodeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/post/$id': {
       id: '/post/$id'
       path: '/post/$id'
@@ -181,6 +201,7 @@ const rootRouteChildren: RootRouteChildren = {
   FeedRoute: FeedRoute,
   ProfileRoute: ProfileRoute,
   StudioRoute: StudioRoute,
+  FxCodeRoute: FxCodeRoute,
   PostIdRoute: PostIdRoute,
   ApiPublicTelegramWebhookRoute: ApiPublicTelegramWebhookRoute,
   ApiPublicTgFileFileIdRoute: ApiPublicTgFileFileIdRoute,

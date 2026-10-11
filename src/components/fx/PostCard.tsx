@@ -9,8 +9,8 @@ export function PostCard({ post, index = 0 }: { post: FeedPost; index?: number }
   const cover = post.media.find((m) => m.kind !== "sticker") ?? post.media[0];
   return (
     <Link
-      to="/post/$id"
-      params={{ id: post.id }}
+      to="/fx/$code"
+      params={{ code: post.id.slice(0, 8) }}
       style={{ animationDelay: `${Math.min(index, 10) * 50}ms` }}
       className="glass-strong press rise block overflow-hidden rounded-3xl"
     >

@@ -1,4 +1,5 @@
 import { createServerFn } from "@tanstack/react-start";
+import { z } from "zod";
 import { createClient } from "@supabase/supabase-js";
 import type { Database } from "@/integrations/supabase/types";
 import type { FeedMedia, MediaKind } from "./feed";
@@ -27,10 +28,10 @@ export const listChannelPosts = createServerFn({ method: "GET" }).handler(async 
   const out: ChannelPost[] = [];
   const groups = new Map<string, ChannelPost>();
   for (const r of data ?? []) {
-    const gid = r.media_group_id ? `${r.chat_id}:${r.media_group_id}` : null;
+    const gid = r.media_group_id ? `g:${r.chat_id}:${r.media_group_id}` : null;
     let post = gid ? groups.get(gid) : undefined;
     if (!post) {
-      post = { id: gid ?? `${r.chat_id}:${r.message_id}`, text: "", posted_at: r.posted_at, media: [] };
+      post = { id: gid ?? `m:${r.chat_id}:${r.message_id}`, text: "", posted_at: r.posted_at, media: [] };
       out.push(post);
       if (gid) groups.set(gid, post);
     }
@@ -40,3 +41,16 @@ export const listChannelPosts = createServerFn({ method: "GET" }).handler(async 
   }
   return out;
 });
+
+export const adminDeleteChannelPost = createServerFn({ method: "POST" })
+  .inputValidator((d) => z.object({ id: z.string().regex(/^[gm]:-?\d+:[\w-]+$/) }).parse(d))
+  .handler(async ({ data }) => {
+    const { requireAdmin } = await import("./admin-session.server");
+    await requireAdmin();
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const [t, chat, rest] = data.id.split(":");
+    const q = supabaseAdmin.from("tg_posts").delete().eq("chat_id", Number(chat));
+    const { error } = t === "g" ? await q.eq("media_group_id", rest!) : await q.eq("message_id", Number(rest));
+    if (error) throw new Error("Could not delete");
+    return { ok: true };
+  });
