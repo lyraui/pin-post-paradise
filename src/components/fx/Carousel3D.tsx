@@ -37,12 +37,12 @@ export function Carousel3D({ posts }: { posts: FeedPost[] }) {
   return (
     <div
       ref={ref}
-      className="no-scrollbar -mx-4 flex snap-x snap-mandatory gap-3 overflow-x-auto px-[12%] py-2"
+      className="no-scrollbar -mx-4 flex snap-x snap-mandatory gap-3 overflow-x-auto px-[12vw] py-2 sm:px-[calc(50%-10rem)]"
     >
       {posts.map((p) => {
         const cover = p.media.find((m) => m.kind !== "sticker") ?? p.media[0];
         return (
-          <div key={p.id} className="w-[76%] shrink-0 snap-center">
+          <div key={p.id} className="w-[76vw] shrink-0 sm:w-80 snap-center">
             <Link
               to="/post/$id"
               params={{ id: p.id }}
