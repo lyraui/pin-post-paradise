@@ -1,6 +1,6 @@
 import type { FeedMedia } from "@/lib/feed";
 
-export function MediaItem({ m, compact }: { m: FeedMedia; compact?: boolean }) {
+export function MediaItem({ m, compact }: { m: FeedMedia; compact?: boolean | undefined }) {
   if (m.kind === "video") {
     return (
       <video
@@ -25,7 +25,7 @@ export function MediaItem({ m, compact }: { m: FeedMedia; compact?: boolean }) {
   );
 }
 
-export function MediaGrid({ media, compact }: { media: FeedMedia[]; compact?: boolean }) {
+export function MediaGrid({ media, compact }: { media: FeedMedia[]; compact?: boolean | undefined }) {
   if (!media.length) return null;
   const stickers = media.filter((m) => m.kind === "sticker");
   const main = media.filter((m) => m.kind !== "sticker");
