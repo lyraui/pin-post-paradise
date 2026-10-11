@@ -19,11 +19,11 @@ export function BottomNav() {
             <Link
               key={to}
               to={to}
-              className={`press flex flex-1 flex-col items-center gap-0 rounded-full py-1.5 text-[10px] font-semibold transition-colors ${
+              className={`press flex flex-1 flex-col items-center gap-0.5 rounded-full py-2.5 text-xs font-semibold transition-colors ${
                 active ? "nav-active text-primary" : "text-muted-foreground"
               }`}
             >
-              <Icon className="h-4 w-4" />
+              <Icon className="h-5 w-5" />
               {label}
             </Link>
           );
