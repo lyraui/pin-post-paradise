@@ -29,7 +29,7 @@ export function Carousel3D({ posts }: { posts: FeedPost[] }) {
     el.addEventListener("scroll", update, { passive: true });
     window.addEventListener("resize", update);
     return () => {
-      el.removeEventListener("touchend", up);
+      el.removeEventListener("scroll", update);
       window.removeEventListener("resize", update);
     };
   }, [posts.length]);

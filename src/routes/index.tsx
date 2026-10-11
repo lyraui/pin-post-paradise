@@ -61,10 +61,6 @@ function Index() {
         </section>
       )}
 
-      {false && (
-        <section>
-        </section>
-      )}
 
       <section className="space-y-3">
         <h2 className="px-1 text-xs font-semibold tracking-widest text-muted-foreground uppercase">
