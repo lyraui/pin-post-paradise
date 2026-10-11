@@ -44,35 +44,12 @@ export const Route = createFileRoute("/")({
 function Index() {
   const { data: posts } = useSuspenseQuery(feedQuery);
   const pinned = posts.filter((p) => p.pinned);
-  const latest = posts.filter((p) => !p.pinned);
-  const rest = latest;
-  const totalLikes = posts.reduce((n, p) => n + p.likes, 0);
-  const totalMedia = posts.reduce((n, p) => n + p.media.length, 0);
+  const rest = posts.filter((p) => !p.pinned);
 
   return (
-    <main className="safe-top mx-auto max-w-2xl space-y-6 px-4 pb-28">
-      <header className="rise space-y-4 pt-2">
-        <div className="flex items-center justify-between">
-          <h1 className="font-display text-2xl font-bold tracking-tight">FX COPYRIGHT</h1>
-        </div>
-        <div className="glass-strong hero-3d rounded-[2rem] p-5">
-          <p className="text-xs font-semibold tracking-widest text-primary uppercase">Fresh drops</p>
-          <p className="font-display mt-1 text-xl leading-tight font-bold">
-            Videos, photos, GIFs &amp; stickers — all in one place.
-          </p>
-          <div className="mt-4 grid grid-cols-3 gap-2">
-            {[
-              { n: posts.length, l: "Posts" },
-              { n: totalMedia, l: "Media" },
-              { n: totalLikes, l: "Likes" },
-            ].map((s) => (
-              <div key={s.l} className="glass rounded-2xl px-3 py-2 text-center">
-                <div className="font-display text-lg font-bold">{s.n}</div>
-                <div className="text-[11px] text-muted-foreground">{s.l}</div>
-              </div>
-            ))}
-          </div>
-        </div>
+    <main className="safe-top mx-auto max-w-xl space-y-6 px-4 pb-28">
+      <header className="rise pt-2">
+        <h1 className="font-display text-2xl font-bold tracking-tight">FX COPYRIGHT</h1>
       </header>
 
       {pinned.length > 0 && (
@@ -88,7 +65,7 @@ function Index() {
         <h2 className="px-1 text-xs font-semibold tracking-widest text-muted-foreground uppercase">
           Latest
         </h2>
-        <div className="grid grid-cols-2 gap-3">
+        <div className="space-y-4">
           {rest.map((p, i) => (
             <PostCard key={p.id} post={p} index={i} />
           ))}

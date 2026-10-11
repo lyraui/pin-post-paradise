@@ -112,6 +112,7 @@ function Panel({ onLocked }: { onLocked: () => void }) {
   const [posts, setPosts] = useState<FeedPost[]>([]);
   const [busy, setBusy] = useState(false);
   const [msg, setMsg] = useState<string | null>(null);
+  const [editing, setEditing] = useState<string | null>(null);
 
   const refresh = () =>
     list()
@@ -226,13 +227,21 @@ function Panel({ onLocked }: { onLocked: () => void }) {
 
       <section className="space-y-2">
         {posts.map((p) => (
-          <div key={p.id} className="glass flex items-center gap-3 rounded-2xl p-3">
+          <div key={p.id} className="glass rounded-2xl p-3">
+          <div className="flex items-center gap-3">
             <div className="min-w-0 flex-1">
               <div className="truncate text-sm font-semibold">{p.title || "Untitled"}</div>
               <div className="text-xs text-muted-foreground">
                 {p.published ? "Published" : "Draft"} · {p.media.length} media · {p.likes} likes
               </div>
             </div>
+            <button
+              aria-label="Edit"
+              onClick={() => setEditing(editing === p.id ? null : p.id)}
+              className={`rounded-full p-2 ${editing === p.id ? "bg-primary text-primary-foreground" : "bg-secondary"}`}
+            >
+              <Pencil className="h-4 w-4" />
+            </button>
             <button
               aria-label={p.pinned ? "Unpin" : "Pin"}
               onClick={() => guard(() => update({ data: { id: p.id, pinned: !p.pinned } }))}
@@ -256,6 +265,37 @@ function Panel({ onLocked }: { onLocked: () => void }) {
             >
               <Trash2 className="h-4 w-4" />
             </button>
+          </div>
+          {editing === p.id && (
+            <form
+              className="mt-3 space-y-2"
+              onSubmit={(e) => {
+                e.preventDefault();
+                const f = new FormData(e.currentTarget);
+                const title = String(f.get("title") ?? "");
+                const body = String(f.get("body") ?? "");
+                setEditing(null);
+                guard(() => update({ data: { id: p.id, title, body } }));
+              }}
+            >
+              <input
+                name="title"
+                defaultValue={p.title}
+                placeholder="Title"
+                className="w-full rounded-2xl border border-input bg-secondary px-4 py-2 text-sm outline-none"
+              />
+              <textarea
+                name="body"
+                rows={4}
+                defaultValue={p.body}
+                placeholder="Write something…"
+                className="w-full rounded-2xl border border-input bg-secondary px-4 py-2 text-sm outline-none"
+              />
+              <button className="w-full rounded-full bg-primary py-2 text-sm font-semibold text-primary-foreground">
+                Save changes
+              </button>
+            </form>
+          )}
           </div>
         ))}
       </section>
