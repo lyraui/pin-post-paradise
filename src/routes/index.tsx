@@ -2,6 +2,7 @@ import { useRouter, createFileRoute } from "@tanstack/react-router";
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
 import { listPublicPosts } from "@/lib/posts.functions";
 import { PostCard } from "@/components/fx/PostCard";
+import { Carousel3D } from "@/components/fx/Carousel3D";
 
 export const feedQuery = queryOptions({
   queryKey: ["feed"],
@@ -46,7 +47,7 @@ function Index() {
   const rest = posts.filter((p) => !p.pinned);
 
   return (
-    <main className="safe-top safe-bottom mx-auto max-w-2xl space-y-5 px-4">
+    <main className="safe-top mx-auto max-w-2xl pb-32 space-y-5 px-4">
       <header className="pt-2">
         <h1 className="font-display text-2xl font-bold tracking-tight">FX COPYRIGHT</h1>
       </header>
@@ -56,11 +57,7 @@ function Index() {
           <h2 className="px-1 text-xs font-semibold tracking-widest text-muted-foreground uppercase">
             Pinned
           </h2>
-          <div className="grid grid-cols-2 gap-3">
-            {pinned.map((p, i) => (
-              <PostCard key={p.id} post={p} index={i} />
-            ))}
-          </div>
+          <Carousel3D posts={pinned} />
         </section>
       )}
 
