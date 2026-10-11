@@ -46,7 +46,7 @@ export function Carousel3D({ posts }: { posts: FeedPost[] }) {
             <Link
               to="/post/$id"
               params={{ id: p.id }}
-              className="glass-strong relative block aspect-[4/5] overflow-hidden rounded-[2rem] transition-[transform,opacity] duration-200 ease-out"
+              className="glass-strong relative block aspect-[4/3] overflow-hidden rounded-[2rem] transition-[transform,opacity] duration-200 ease-out"
             >
               <div className="absolute inset-0 bg-muted">{cover && <MediaThumb m={cover} />}</div>
               <span className="glass-strong absolute top-3 left-3 inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[11px] font-semibold text-primary">
