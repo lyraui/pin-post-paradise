@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import { GlassVideo } from "./GlassVideo";
 import type { FeedMedia } from "@/lib/feed";
 
@@ -18,7 +19,7 @@ export function MediaItem({ m }: { m: FeedMedia }) {
 export function MediaThumb({ m }: { m: FeedMedia }) {
   const cls = "h-full w-full object-cover";
   if (m.kind === "video")
-    return <video src={frame(m.url)} muted autoPlay loop playsInline preload="metadata" className={cls} />;
+    return <ThumbVideo src={frame(m.url)} className={cls} />;
   if (m.kind === "sticker") return <img src={m.url} alt="" className="h-full w-full object-contain p-4" />;
   return <img src={m.url} alt="" loading="lazy" className={cls} />;
 }
@@ -41,4 +42,21 @@ export function MediaGrid({ media }: { media: FeedMedia[] }) {
       )}
     </div>
   );
+}
+
+/** Plays only while on screen so the home page loads fast. */
+function ThumbVideo({ src, className }: { src: string; className: string }) {
+  const r = useRef<HTMLVideoElement>(null);
+  useEffect(() => {
+    const el = r.current;
+    if (!el) return;
+    el.muted = true;
+    const io = new IntersectionObserver(([e]) => {
+      if (e.isIntersecting) el.play().catch(() => {});
+      else el.pause();
+    }, { threshold: 0.25 });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+  return <video ref={r} src={src} muted loop playsInline preload="metadata" className={className} />;
 }

@@ -11,6 +11,8 @@ export function GlassVideo({ src }: { src: string }) {
       el.pause();
       return;
     }
+    el.muted = false;
+    el.volume = 1;
     try {
       await el.play();
     } catch {
@@ -25,7 +27,9 @@ export function GlassVideo({ src }: { src: string }) {
         ref={v}
         src={src}
         playsInline
-        preload="auto"
+        preload="metadata"
+        // @ts-expect-error webkit attr
+        webkit-playsinline="true"
         onClick={toggle}
         className="block w-full cursor-pointer"
       />

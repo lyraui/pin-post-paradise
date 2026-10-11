@@ -65,7 +65,7 @@ function PostPage() {
   return (
     <main className="safe-top mx-auto pb-32 max-w-xl space-y-4 px-4">
       <Link to="/" className="glass inline-flex items-center gap-1 rounded-full px-3 py-1.5 text-sm">
-        <ArrowLeft className="h-4 w-4" /> Feed
+        <ArrowLeft className="h-4 w-4" /> FX
       </Link>
       <article className="glass-strong rise space-y-4 rounded-3xl p-4">
         {post.pinned && (
