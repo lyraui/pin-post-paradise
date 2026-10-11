@@ -12,7 +12,7 @@ export function BottomNav() {
   if (pathname.startsWith("/studio")) return null;
   return (
     <nav className="safe-bottom pointer-events-none fixed inset-x-0 bottom-0 z-40 flex justify-center px-4">
-      <div className="glass-strong pointer-events-auto flex w-full max-w-[260px] items-center gap-1 rounded-full p-1">
+      <div className="glass-strong pointer-events-auto flex w-full max-w-[320px] items-center gap-1 rounded-full p-1.5">
         {items.map(({ to, label, icon: Icon }) => {
           const active = to === "/" ? pathname === "/" : pathname.startsWith(to);
           return (

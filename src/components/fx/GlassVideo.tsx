@@ -15,11 +15,7 @@ export function GlassVideo({ src }: { src: string }) {
       await el.play();
     } catch {
       el.muted = true;
-      try {
-        await el.play();
-      } catch {
-        el.controls = true;
-      }
+      el.play().catch(() => {});
     }
   };
 
@@ -31,7 +27,6 @@ export function GlassVideo({ src }: { src: string }) {
         playsInline
         preload="auto"
         onClick={toggle}
-        onError={(e) => (e.currentTarget.controls = true)}
         className="block w-full cursor-pointer"
       />
     </div>
