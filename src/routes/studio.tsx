@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
-import { Lock, ShieldX, Pin, Trash2, Eye, EyeOff, Loader2, LogOut, ArrowLeft } from "lucide-react";
+import { Lock, ShieldX, Pin, Trash2, Eye, EyeOff, Loader2, LogOut, ArrowLeft, Pencil } from "lucide-react";
 import {
   adminStatus,
   adminLogin,
